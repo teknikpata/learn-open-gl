@@ -1,0 +1,18 @@
+# Pick up the build:linux / build:windows / build:macos sections below
+# automatically, based on the host OS.
+common --enable_platform_specific_config
+
+build:linux --cxxopt=-std=c++20 --host_cxxopt=-std=c++20
+build:macos --cxxopt=-std=c++20 --host_cxxopt=-std=c++20
+build:windows --cxxopt=/std:c++20 --host_cxxopt=/std:c++20
+
+# The output symlinks go in a per-OS subdirectory of build/, so building from
+# both Windows and WSL in this same directory doesn't leave each one pointing
+# at the other's output tree.
+build:linux --symlink_prefix=build/linux/
+build:macos --symlink_prefix=build/macos/
+build:windows --symlink_prefix=build/windows/
+
+# Machine-specific settings, not checked in. On Windows this is where to put
+# BAZEL_VC if Bazel cannot find MSVC by itself; see README.md.
+try-import %workspace%/.bazelrc.local

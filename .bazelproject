@@ -1,0 +1,14 @@
+# Project view for the Bazel plugin for CLion ("Bazel for CLion" / clwb).
+# Syntax: python-like, 2-space indentation, # comments.
+# Docs: https://ij.bazel.build/docs/project-views.html
+#
+# Do not set workspace_type here: C++ is the plugin's default for CLion, and
+# naming a language explicitly only narrows what gets resolved.
+
+# Everything, so MODULE.bazel and the .bazelrc files stay editable in the IDE.
+directories:
+  .
+  -build
+
+targets:
+  //src:triangle

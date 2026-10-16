@@ -1,0 +1,10 @@
+/bazel-*
+/build/
+/MODULE.bazel.lock
+
+# Machine-specific Bazel settings (BAZEL_VC path, local flags).
+/.bazelrc.local
+
+# CLion and the Bazel plugin's generated project data.
+/.clwb/
+/.idea/

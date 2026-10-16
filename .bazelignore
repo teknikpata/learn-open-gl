@@ -1,0 +1,2 @@
+# Bazel output symlinks (see --symlink_prefix in .bazelrc); not source packages.
+build
