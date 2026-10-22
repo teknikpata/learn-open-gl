@@ -11,4 +11,4 @@ directories:
   -build
 
 targets:
-  //src:triangle
+  //src/hello-triangle/...
