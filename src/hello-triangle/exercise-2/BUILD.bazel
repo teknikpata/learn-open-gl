@@ -3,7 +3,7 @@ load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 # Hello-Triangle exercise 2:
 # Create the same 2 triangles using two different VAOs and VBOs for their data.
 cc_binary(
-    name = "exercise-2",
+    name = "hello-triangle-2",
     srcs = ["main.cpp"],
     deps = [
         "//glad",

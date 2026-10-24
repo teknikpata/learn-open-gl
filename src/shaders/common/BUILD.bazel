@@ -1,0 +1,17 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+# Code shared by every program in the shaders chapter. GLSL files in this
+# directory and its subdirectories are shipped as runfiles of every binary that
+# depends on it, so under bazel run they load with paths like
+# "src/shaders/common/basic/basic.vert".
+cc_library(
+    name = "common",
+    hdrs = ["Shader.h"],
+    data = glob(
+        ["**/*.vs", "**/*.fs", "**/*.vert", "**/*.frag", "**/*.glsl"],
+        allow_empty = True,
+    ),
+    includes = ["."],
+    visibility = ["//src/shaders:__subpackages__"],
+    deps = ["//glad"],
+)

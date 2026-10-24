@@ -13,6 +13,10 @@ build:linux --symlink_prefix=build/linux/
 build:macos --symlink_prefix=build/macos/
 build:windows --symlink_prefix=build/windows/
 
+# Windows doesn't create the runfiles directory by default; bazel run starts the
+# binary there, so without it data files such as GLSL shaders can't be opened.
+build:windows --enable_runfiles
+
 # Machine-specific settings, not checked in. On Windows this is where to put
 # BAZEL_VC if Bazel cannot find MSVC by itself; see README.md.
 try-import %workspace%/.bazelrc.local
