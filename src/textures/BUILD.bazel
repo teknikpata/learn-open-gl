@@ -1,0 +1,11 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+
+cc_binary(
+    name = "textures",
+    srcs = ["main.cpp"],
+    deps = [
+        "//glad",
+        "//src/textures/common",
+        "@glfw",
+    ],
+)
