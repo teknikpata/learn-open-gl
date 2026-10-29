@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Textures exercise 2:
+# Experiment with the texture wrapping methods by specifying texture
+# coordinates in the range 0.0f to 2.0f instead of 0.0f to 1.0f.
+learnopengl_binary(name = "textures-2", deps = ["//src/textures/common"])

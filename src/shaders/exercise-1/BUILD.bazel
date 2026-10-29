@@ -1,0 +1,5 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Shaders exercise 1:
+# Adjust the vertex shader so that the triangle is upside down.
+learnopengl_binary(name = "shaders-1", deps = ["//src/shaders/common"])

@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "common/Shader.h"
+#include "Shader.h"
 
 bool wireFrame = false;
 bool shaderSwitch = false;

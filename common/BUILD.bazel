@@ -1,0 +1,11 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+# Code shared by every chapter. Shader compiles and links a vertex/fragment
+# shader pair loaded from files, and sets uniforms on the program.
+cc_library(
+    name = "shader",
+    hdrs = ["Shader.h"],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+    deps = ["//glad"],
+)

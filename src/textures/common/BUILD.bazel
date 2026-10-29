@@ -1,19 +1,11 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
-# Code shared by every program in the textures chapter. GLSL files and images in
-# this directory and its subdirectories are shipped as runfiles of every binary
-# that depends on it, so under bazel run they load with paths like
+# Assets shared by every program in the textures chapter. GLSL files and images
+# in this directory and its subdirectories are shipped as runfiles of every
+# binary that depends on it, so under bazel run they load with paths like
 # "src/textures/common/texture/texture.vert".
-#
-# stb_image.h is stb_image v2.30, checked in from
-# https://github.com/nothings/stb/blob/003501f6d7a8668ce8b6d875e34dd97ad0d5d5b5/stb_image.h
 cc_library(
     name = "common",
-    srcs = ["stb_image.cpp"],
-    hdrs = [
-        "Shader.h",
-        "stb_image.h",
-    ],
     data = glob(
         [
             "**/*.vs",
@@ -26,7 +18,9 @@ cc_library(
         ],
         allow_empty = True,
     ),
-    includes = ["."],
     visibility = ["//src/textures:__subpackages__"],
-    deps = ["//glad"],
+    deps = [
+        "//common:shader",
+        "//third_party/stb:stb_image",
+    ],
 )

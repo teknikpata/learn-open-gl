@@ -1,11 +1,5 @@
-load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("//tools:learnopengl.bzl", "learnopengl_binary")
 
-cc_binary(
-    name = "textures",
-    srcs = ["main.cpp"],
-    deps = [
-        "//glad",
-        "//src/textures/common",
-        "@glfw",
-    ],
-)
+# The main chapter code: https://learnopengl.com/Getting-started/Textures
+# The chapter's exercises live in the exercise-N subpackages.
+learnopengl_binary(name = "textures", deps = ["//src/textures/common"])

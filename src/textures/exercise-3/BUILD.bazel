@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Textures exercise 3:
+# Display only the center pixels of the texture image on the rectangle so the
+# individual pixels become visible, experimenting with the filtering methods.
+learnopengl_binary(name = "textures-3", deps = ["//src/textures/common"])

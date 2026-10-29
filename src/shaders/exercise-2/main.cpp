@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "../common/Shader.h"
+#include "Shader.h"
 
 bool wireFrame = false;
 bool shaderSwitch = false;
@@ -72,8 +72,8 @@ int main() {
         0, 1, 2
     };
 
-    Shader positionColor("src/shaders/common/positioncolor/positioncolor.vert", "src/shaders/common/positioncolor/positioncolor.frag");
-    positionColor.use();
+    Shader displacementShader("src/shaders/common/displacement/displacement.vert", "src/shaders/common/basic/basic.frag");
+    Shader basicShader("src/shaders/common/basic/basic.vert", "src/shaders/common/basic/basic.frag");
     unsigned int vertexBufferObject;
     unsigned int elementBufferObject;
     unsigned int vertexArrayObject;
@@ -94,10 +94,17 @@ int main() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),  (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    displacementShader.use();
+    displacementShader.setFloat("offset", 0.25f);
     while(!glfwWindowShouldClose(window))
     {
         glClearColor(0.6588f, 0.1961f, 0.251f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        if (!shaderSwitch)
+            basicShader.use();
+        else
+            displacementShader.use();
 
         glBindVertexArray(vertexArrayObject);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

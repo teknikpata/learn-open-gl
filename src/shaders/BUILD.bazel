@@ -1,13 +1,5 @@
-load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("//tools:learnopengl.bzl", "learnopengl_binary")
 
-# The main chapter code: https://learnopengl.com/Getting-started/Hello-Triangle
+# The main chapter code: https://learnopengl.com/Getting-started/Shaders
 # The chapter's exercises live in the exercise-N subpackages.
-cc_binary(
-    name = "shaders",
-    srcs = ["main.cpp"],
-    deps = [
-        "//glad",
-        "//src/shaders/common",
-        "@glfw",
-    ],
-)
+learnopengl_binary(name = "shaders", deps = ["//src/shaders/common"])

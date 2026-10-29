@@ -2,8 +2,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "common/Shader.h"
-#include "common/stb_image.h"
+#include "Shader.h"
+#include "stb_image.h"
 
 bool wireFrame = false;
 bool shaderSwitch = false;

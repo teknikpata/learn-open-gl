@@ -1,13 +1,6 @@
-load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("//tools:learnopengl.bzl", "learnopengl_binary")
 
 # Hello-Triangle exercise 1:
 # Draw 2 triangles next to each other using glDrawArrays by adding more
 # vertices to your data.
-cc_binary(
-    name = "hello-triangle-1",
-    srcs = ["main.cpp"],
-    deps = [
-        "//glad",
-        "@glfw",
-    ],
-)
+learnopengl_binary(name = "hello-triangle-1")

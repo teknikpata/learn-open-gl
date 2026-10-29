@@ -1,14 +1,7 @@
-load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("//tools:learnopengl.bzl", "learnopengl_binary")
 
 # Hello-Triangle exercise 3:
 # Create two shader programs where the second program uses a different
 # fragment shader that outputs the color yellow; draw both triangles again
 # where one outputs the color yellow.
-cc_binary(
-    name = "hello-triangle-3",
-    srcs = ["main.cpp"],
-    deps = [
-        "//glad",
-        "@glfw",
-    ],
-)
+learnopengl_binary(name = "hello-triangle-3")

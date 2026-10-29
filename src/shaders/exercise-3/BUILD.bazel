@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Shaders exercise 3:
+# Output the vertex position to the fragment shader using the out keyword and
+# set the fragment's color equal to this vertex position.
+learnopengl_binary(name = "shaders-3", deps = ["//src/shaders/common"])

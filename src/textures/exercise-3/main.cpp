@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "../common/Shader.h"
+#include "Shader.h"
+#include "stb_image.h"
 
 bool wireFrame = false;
 bool shaderSwitch = false;
@@ -63,17 +64,19 @@ int main() {
     }
 
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f, 1.0f,  0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f, 0.0f,  1.0f, 0.0f,
-        0.0f,  0.5f, 0.0f,  0.0f,  0.0f, 1.0f,
+        // positions          // colors           // texture coords
+        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.52f, 0.52f,   // top right
+        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.52f, 0.48f,   // bottom right
+       -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.48f, 0.48f,   // bottom left
+       -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.48f, 0.52f    // top left
    };
 
     unsigned int indices[] = {
-        0, 1, 2
+        0, 1, 3,
+        1, 2, 3
     };
 
-    Shader displacementShader("src/shaders/common/displacement/displacement.vert", "src/shaders/common/basic/basic.frag");
-    Shader basicShader("src/shaders/common/basic/basic.vert", "src/shaders/common/basic/basic.frag");
+    Shader textureShader("src/textures/common/center/center.vert", "src/textures/common/center/center.frag");
     unsigned int vertexBufferObject;
     unsigned int elementBufferObject;
     unsigned int vertexArrayObject;
@@ -89,23 +92,62 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),  (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),  (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),  (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
-    displacementShader.use();
-    displacementShader.setFloat("offset", 0.25f);
+    stbi_set_flip_vertically_on_load(true);
+    unsigned int texture1;
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load and generate the texture
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("src/textures/common/container.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    unsigned int texture2;
+    glGenTextures(1, &texture2);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+    data = stbi_load("src/textures/common/awesomeface.png", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    textureShader.use();
+    textureShader.setInt("uTexture2", 1);
+
     while(!glfwWindowShouldClose(window))
     {
         glClearColor(0.6588f, 0.1961f, 0.251f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (!shaderSwitch)
-            basicShader.use();
-        else
-            displacementShader.use();
 
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
         glBindVertexArray(vertexArrayObject);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

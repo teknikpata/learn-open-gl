@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Textures exercise 4:
+# Use a uniform to control the mix value between the two textures, changed
+# with the up and down arrow keys.
+learnopengl_binary(name = "textures-4", deps = ["//src/textures/common"])

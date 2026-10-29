@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Textures exercise 1:
+# Make sure only the happy face looks in the other/reverse direction by
+# changing the fragment shader.
+learnopengl_binary(name = "textures-1", deps = ["//src/textures/common"])

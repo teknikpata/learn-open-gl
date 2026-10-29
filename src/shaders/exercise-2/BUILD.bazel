@@ -1,0 +1,6 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Shaders exercise 2:
+# Specify a horizontal offset via a uniform and move the triangle to the right
+# side of the screen in the vertex shader using this offset value.
+learnopengl_binary(name = "shaders-2", deps = ["//src/shaders/common"])
