@@ -1,0 +1,7 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Transformations exercise 2:
+# Draw a second container with another call to glDrawElements, placed at the
+# top-left of the window using transformations only. Instead of rotating it,
+# scale it over time (sin is useful here; a negative scale inverts the object).
+learnopengl_binary(name = "transformations-2", deps = ["//src/transformations/common"])

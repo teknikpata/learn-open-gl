@@ -1,0 +1,28 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+# Assets shared by every program in the transformations chapter, plus GLM for
+# the matrix math. GLSL files and images in this directory and its
+# subdirectories are shipped as runfiles of every binary that depends on it, so
+# under bazel run they load with paths like
+# "src/transformations/common/texture/texture.vert".
+cc_library(
+    name = "common",
+    data = glob(
+        [
+            "**/*.vs",
+            "**/*.fs",
+            "**/*.vert",
+            "**/*.frag",
+            "**/*.glsl",
+            "**/*.png",
+            "**/*.jpg",
+        ],
+        allow_empty = True,
+    ),
+    visibility = ["//src/transformations:__subpackages__"],
+    deps = [
+        "//common:shader",
+        "//third_party/stb:stb_image",
+        "@glm",
+    ],
+)

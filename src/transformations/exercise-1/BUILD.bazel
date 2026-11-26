@@ -1,0 +1,7 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# Transformations exercise 1:
+# Using the last transformation on the container, try switching the order
+# around by first rotating and then translating. See what happens and try to
+# reason why this happens.
+learnopengl_binary(name = "transformations-1", deps = ["//src/transformations/common"])

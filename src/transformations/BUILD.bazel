@@ -1,0 +1,5 @@
+load("//tools:learnopengl.bzl", "learnopengl_binary")
+
+# The main chapter code: https://learnopengl.com/Getting-started/Transformations
+# The chapter's exercises live in the exercise-N subpackages.
+learnopengl_binary(name = "transformations", deps = ["//src/transformations/common"])
